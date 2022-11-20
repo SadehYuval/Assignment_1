@@ -2,16 +2,16 @@
 #include "JoinPolicy.h"
 #include "Agent.h"
 
-Agent MandatesJoinPolicy::join(vector<Agent> &offers,vector<int> &mandatesOfCoalition) {
-    Agent temptAgent = offers[0];
-    int mandates = mandatesOfCoalition.at(0);
+int MandatesJoinPolicy::join(vector<int> &offers,vector<int> &mandatesOfCoalition) {
+    int temptAgentId = offers[0];
+    int mandates = mandatesOfCoalition.at(temptAgentId);
     int index = 1;
-    for(Agent agent1: offers){
-       if(mandatesOfCoalition.at(index)> mandates){
-           temptAgent = agent1;
-           mandates = mandatesOfCoalition.at(index);
+    for(int agentId: offers){
+       if(mandatesOfCoalition.at(agentId)> mandates){
+           temptAgentId = agentId;
+           mandates = mandatesOfCoalition.at(agentId);
        }
        index++;
     }
-    return  temptAgent;
+    return  temptAgentId;
 }

@@ -72,9 +72,10 @@ int Agent::getCoalition() const
 
 void Agent::step(Simulation &sim)
 {
-    Graph temp = sim.getGraph();
-    Party addTo = mSelectionPolicy -> select(temp, *this);
-    addTo.addOffer(*this);
+    int selectedPartyId = mSelectionPolicy -> select(sim, *this);
+    Party &selectedParty = sim.getGraph().getParty(selectedPartyId);
+    selectedParty.addOffer(mAgentId);
+    
 }
 
 void  Agent::setCoalition(int c) {

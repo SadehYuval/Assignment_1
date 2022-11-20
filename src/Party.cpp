@@ -73,10 +73,11 @@ State Party::getState() const
     return mState;
 }
 
-void Party::setState(State state)
+int Party::getId()const
 {
-    mState = state;
+    return mId;
 }
+
 
 int Party::getMandates() const
 {
@@ -88,15 +89,15 @@ const string & Party::getName() const
     return mName;
 }
 
-const vector <Agent> Party::getOffers() const
+const vector <int> Party::getOffersAgentId() const
 {
     return offers;
 }
 
-vector <Agent> &Party::getOffers(){
-    return offers;
+void Party::setState(State state)
+{
+    mState = state;
 }
-
 
 
 void Party::step(Simulation &s)
@@ -115,20 +116,22 @@ void Party::step(Simulation &s)
     }
 }
 
-void  Party::addOffer(Agent &agent)
+void  Party::addOffer(int agentId)
 {
-    offers.push_back(agent);
+    offers.push_back(agentId);
 }
 
 void  Party::chooseParty(Simulation &s)
 {
-    Agent chosenAgent = mJoinPolicy->join(offers,s.getMandatesCoalition());
-    s.addToCoalition(chosenAgent.getPartyId(),chosenAgent.getCoalition());
+    int selectedAgentId =  mJoinPolicy->join(offers,s.getMandatesCoalition());
+    int cloneAgentCoalition = s.getAgents()[selectedAgentId].getCoalition();
+    Agent cloneAgent = s.getAgents()[0];
     //clone Agent + add to vector<Agent>
-    Agent cloneAgent = chosenAgent;
     cloneAgent.setPartyId(mId);
     cloneAgent.setId(s.getAgents().size());
+    cloneAgent.setCoalition(cloneAgentCoalition);
     s.addAgent(cloneAgent);
+    s.addToCoalition(mId,cloneAgent.getCoalition());
 }
 
 

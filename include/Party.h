@@ -34,13 +34,14 @@ public:
     State getState() const;
     void setState(State state);
     int getMandates() const;
-    vector <Agent> &getOffers();
+    int getId()const;
+    vector <int> &getOffers();
     void step(Simulation &s);
     const string &getName() const;
-    void  addOffer(Agent &agent);
+    void  addOffer(int agentId);
     void  changeState();
     void  chooseParty(Simulation &s);
-    const vector <Agent> getOffers() const;
+    const vector <int> getOffersAgentId() const;
 
 
 private:
@@ -50,6 +51,6 @@ private:
     JoinPolicy *mJoinPolicy;
     State mState;
     int timer;
-    vector<Agent> offers;
+    vector<int> offers;
 
 };

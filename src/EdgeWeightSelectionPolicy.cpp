@@ -3,20 +3,21 @@
 #include "Party.h"
 #include "Agent.h"
 #include "SelectionPolicy.h"
+#include "Simulation.h"
 
-Party &EdgeWeightSelectionPolicy::select(Graph &graph, Agent &selector) {
-    vector <Party> neighbors = getNeighbors(graph, selector.getPartyId());
-    vector <Party> validNeighbors = screenNeighbors(neighbors, selector.getCoalition());
+int EdgeWeightSelectionPolicy::select(Simulation &sim, Agent &selector) {
+    vector <int> neighborsId = getNeighborsId(sim, selector.getPartyId());
+    vector <int> validNeighborsId = screenNeighborsId(neighborsId, selector.getCoalition(),sim);
     int maxWeight = 0;
-    Party toChoose = validNeighbors[0];
+    int partyIdtoChoose = validNeighborsId[0];
     int tempWeight;
-    int validNeighborsSize = validNeighbors.size();
-    for(int i=0; i<validNeighborsSize; i++){
-        tempWeight = graph.getEdgeWeight(selector.getPartyId(), i);
+    int validNeighborsIdSize = validNeighborsId.size();
+    for(int i=0; i<validNeighborsIdSize; i++){
+        tempWeight = sim.getGraph().getEdgeWeight(selector.getPartyId(), i);
         if(tempWeight > maxWeight){
             maxWeight = tempWeight;
-            toChoose = neighbors[i];
+            partyIdtoChoose = neighborsId[i];
         }
     }
-    return toChoose;
+    return partyIdtoChoose;
 }

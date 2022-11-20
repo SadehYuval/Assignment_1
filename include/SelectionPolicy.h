@@ -3,29 +3,27 @@
 class Party;
 class Graph;
 class Agent;
+class Simulation;
 using std::vector;
 
 class SelectionPolicy {
     public:
-
-        SelectionPolicy();
-        vector <Party> &availableNeighbors;
         virtual ~SelectionPolicy() = default;
-        virtual Party& select(Graph &graph,Agent &selector) = 0;
-        vector<Party> &getNeighbors(Graph &graph, int partyId);
-        vector<Party> &screenNeighbors(vector <Party> &neighbors, int coalition);
+        virtual int select(Simulation &sim,Agent &selector) = 0;
+        vector<int> &getNeighborsId(Simulation &sim, int partyId);
+        vector<int> &screenNeighborsId(vector <int> &neighborsId, int coalition,Simulation &sim);
  };
 
 
 class MandatesSelectionPolicy: public SelectionPolicy{ 
     public:
         ~MandatesSelectionPolicy();
-        Party& select(Graph &graph, Agent &selector) override;
+        int select(Simulation &sim, Agent &selector) override;
 };
 
 
 class EdgeWeightSelectionPolicy: public SelectionPolicy{
     public:
         ~EdgeWeightSelectionPolicy();
-        Party& select(Graph &graph, Agent &selector) override;
+        int select(Simulation &sim, Agent &selector) override;
  };

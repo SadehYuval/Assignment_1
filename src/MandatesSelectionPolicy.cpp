@@ -3,20 +3,22 @@
 #include "Party.h"
 #include "Agent.h"
 #include "SelectionPolicy.h"
+#include "Simulation.h"
 
-Party &MandatesSelectionPolicy::select(Graph &graph, Agent &selector) {
-    vector <Party> neighbors = getNeighbors(graph, selector.getPartyId());
-    vector <Party> validNeighbors = screenNeighbors(neighbors, selector.getCoalition());
+int MandatesSelectionPolicy::select(Simulation &sim, Agent &selector) {
+    vector <int> neighborsId = getNeighborsId(sim, selector.getPartyId());
+    vector <int> validNeighborsId = screenNeighborsId(neighborsId, selector.getCoalition(),sim);
     int mostMandates = 0;
-    Party toChoose = validNeighbors[0];
+    int partyIdtoChoose = validNeighborsId[0];
     int tempMandates;
-    int validNeighborsSize = validNeighbors.size();
-    for(int i=0; i<validNeighborsSize; i++){
-        tempMandates = neighbors[i].getMandates();
+    int validNeighborsIdSize = validNeighborsId.size();
+    for(int i=0; i<validNeighborsIdSize; i++){
+        Party &currentParty = sim.getGraph().getParty(neighborsId[i]);
+        tempMandates = currentParty.getMandates();
         if(tempMandates > mostMandates){
             mostMandates = tempMandates;
-            toChoose = neighbors[i];
+            partyIdtoChoose = currentParty.getId();
         }
     }
-    return toChoose;
+    return partyIdtoChoose;
 }

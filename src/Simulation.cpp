@@ -40,9 +40,20 @@ const Graph &Simulation::getGraph() const
     return mGraph;
 }
 
+Graph &Simulation::getGraph() 
+{
+    return mGraph;
+}
+
+
 const vector<Agent> &Simulation::getAgents() const
 {
     return mAgents;
+}
+
+Agent &Simulation::getAgent(int agentId)
+{
+    return mAgents[agentId];
 }
 
 const Party &Simulation::getParty(int partyId) const

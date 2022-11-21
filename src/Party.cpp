@@ -12,8 +12,11 @@ Party::Party(int id, string name, int mandates, JoinPolicy *jp) : mId(id), mName
 //destructor
 Party::~Party()
 {
-    delete(mJoinPolicy);
-    mJoinPolicy = nullptr;
+    if(mJoinPolicy){
+        delete(mJoinPolicy);
+        mJoinPolicy = nullptr;
+    }
+    
 }
 //assignment operator
 Party& Party:: operator=(const Party& other)
@@ -89,7 +92,7 @@ const string & Party::getName() const
     return mName;
 }
 
-const vector <int> Party::getOffersAgentId() const
+vector <int> &Party::getOffers()
 {
     return offers;
 }

@@ -13,12 +13,12 @@ class JoinPolicy{
 
 class MandatesJoinPolicy : public JoinPolicy {
      public:
-          ~MandatesJoinPolicy();
+          ~MandatesJoinPolicy() = default;
           int join(vector<int> &offers, vector<int> &mandatesOfCoalition) override;
 };
 
 class LastOfferJoinPolicy : public JoinPolicy {
      public:
-          ~LastOfferJoinPolicy();
+          ~LastOfferJoinPolicy() = default;
           int join(vector<int> &offers, vector<int> &mandatesOfCoalition) override;
 };

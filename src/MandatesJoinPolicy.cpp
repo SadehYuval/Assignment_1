@@ -1,4 +1,3 @@
-#pragma once
 #include "JoinPolicy.h"
 #include "Agent.h"
 

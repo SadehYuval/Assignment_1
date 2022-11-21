@@ -13,8 +13,11 @@ Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : mAgen
 //destructor
 Agent::~Agent()
 {
-    delete(mSelectionPolicy);
-    mSelectionPolicy = nullptr;
+    if(mSelectionPolicy){
+        delete(mSelectionPolicy);
+        mSelectionPolicy = nullptr;
+    }
+    
 }
 //assignment operator
 Agent& Agent:: operator=(const Agent& other)

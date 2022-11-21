@@ -41,7 +41,6 @@ public:
     void  addOffer(int agentId);
     void  changeState();
     void  chooseParty(Simulation &s);
-    const vector <int> getOffersAgentId() const;
 
 
 private:

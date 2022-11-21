@@ -27,7 +27,8 @@ bool Simulation::shouldTerminate() const
     int mAgentsSize = mAgents.size();
     bool ans = mAgentsSize == mGraph.getNumVertices();//all parties are joined
     if(!ans){
-        for(int i = 0; i< allCoalition.size() & !ans; i++){
+        int allCoalitionSize = allCoalition.size();
+        for(int i = 0; i< allCoalitionSize && !ans; i++){
             if(sizeOfCoalitions[i]>= 61)
                 ans = true;
         }

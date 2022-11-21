@@ -10,20 +10,20 @@ class SelectionPolicy {
     public:
         virtual ~SelectionPolicy() = default;
         virtual int select(Simulation &sim,Agent &selector) = 0;
-        vector<int> &getNeighborsId(Simulation &sim, int partyId);
-        vector<int> &screenNeighborsId(vector <int> &neighborsId, int coalition,Simulation &sim);
+        void getNeighborsId(Simulation &sim, int partyId, vector <int> neighborsId);
+        void screenNeighborsId(vector <int> neighborsId, int coalition,Simulation &sim);
  };
 
 
 class MandatesSelectionPolicy: public SelectionPolicy{ 
     public:
-        ~MandatesSelectionPolicy();
+        ~MandatesSelectionPolicy() = default;
         int select(Simulation &sim, Agent &selector) override;
 };
 
 
 class EdgeWeightSelectionPolicy: public SelectionPolicy{
     public:
-        ~EdgeWeightSelectionPolicy();
+        ~EdgeWeightSelectionPolicy() = default;
         int select(Simulation &sim, Agent &selector) override;
  };

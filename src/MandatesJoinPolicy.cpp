@@ -14,3 +14,7 @@ int MandatesJoinPolicy::join(vector<int> &offers,vector<int> &mandatesOfCoalitio
     }
     return  temptAgentId;
 }
+
+JoinPolicy *MandatesJoinPolicy::clone(){
+    return new MandatesJoinPolicy;
+}

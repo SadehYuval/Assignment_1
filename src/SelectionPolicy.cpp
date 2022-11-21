@@ -5,7 +5,7 @@
 #include "Simulation.h"
 
 
-void SelectionPolicy::getNeighborsId(Simulation &sim, int partyId,vector <int> neighborsId){
+void SelectionPolicy::getNeighborsId(Simulation &sim, int partyId,vector <int> &neighborsId){
     Graph &graph = sim.getGraph();
     int size = graph.getNumVertices();
     for(int i = 0; i<size; i++){
@@ -19,7 +19,7 @@ void SelectionPolicy::getNeighborsId(Simulation &sim, int partyId,vector <int> n
 
 //vector<int> &screenNeighborsId(vector <int> &neighborsId, int coalition,Graph &graph);
 
-void SelectionPolicy::screenNeighborsId(vector <int> neighborsId, int coalition,Simulation &sim){
+void SelectionPolicy::screenNeighborsId(vector <int> &neighborsId, int coalition,Simulation &sim){
     vector <int> validNeighborsId;
     bool add = true;
     int neighborsSize = neighborsId.size();

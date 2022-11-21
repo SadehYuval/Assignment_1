@@ -25,20 +25,16 @@ Party& Party:: operator=(const Party& other)
         this->mId = other.mId;
         this->mName = other.mName;
         this->mMandates = other.mMandates;
-        this->mJoinPolicy = other.mJoinPolicy;//TODO check if valid
+        this->mJoinPolicy = other.mJoinPolicy->clone();
         this->mState = other.mState;
         this->timer = other.timer;
-        this->offers.clear();
-        int offersSize = other.offers.size(); 
-        for(int i =0; i<offersSize; i++){
-            offers.push_back(other.offers[i]);
-        }
+        this->offers = other.offers;
     }
     return *this;
 }
 //copy constructor
 Party::Party(const Party &other)
-    : mId{other.mId}, mName{other.mName}, mMandates{other.mMandates}, mJoinPolicy{other.mJoinPolicy}, mState{other.mState}
+    : mId{other.mId}, mName{other.mName}, mMandates{other.mMandates}, mJoinPolicy{other.mJoinPolicy->clone()}, mState{other.mState}
     ,timer{other.timer}, offers{other.offers}
 {
     
@@ -47,26 +43,24 @@ Party::Party(const Party &other)
 Party& Party:: operator=(Party &&other) noexcept
 {
     if(this != &other){
+        delete(this);
         mId = other.mId;
         mName = other.mName;
         mMandates = other.mMandates;
-        mJoinPolicy = other.mJoinPolicy;
+        mJoinPolicy = other.mJoinPolicy->clone();
         mState = other.mState;
         timer = other.timer;
-        offers = other.offers;//TODO
-        //other.offers = nullptr; Realize what to do with a vector that needs to be deleted
+        offers = other.offers;
         other.mJoinPolicy = nullptr;
     }
     return *this;
 }
 //move copy constructor
 Party::Party(Party &&other)noexcept
-    : mId{other.mId}, mName{other.mName}, mMandates{other.mMandates}, mJoinPolicy{other.mJoinPolicy}, mState{other.mState}
+    : mId{other.mId}, mName{other.mName}, mMandates{other.mMandates}, mJoinPolicy{other.mJoinPolicy->clone()}, mState{other.mState}
     ,timer{other.timer}, offers{other.offers}
 {
     other.mJoinPolicy = nullptr;
-    //need to check if we need to  other.offers = nullptr;
-
 }
 
 

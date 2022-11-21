@@ -4,6 +4,7 @@
 
 using std::cout;
 using std::endl;
+using namespace std;
 
 int main(int argc, char **argv)
 {
@@ -21,8 +22,9 @@ int main(int argc, char **argv)
     vector<json> outPerIter = {Parser::makeJson(simulation)};
     while (!simulation.shouldTerminate())
     {
-        simulation.step();
-        outPerIter.push_back(Parser::makeJson(simulation));
+     simulation.step();
+     outPerIter.push_back(Parser::makeJson(simulation));
+       
     }
 
     // writing the outputs list to a file

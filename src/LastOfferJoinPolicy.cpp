@@ -3,3 +3,7 @@
 int LastOfferJoinPolicy::join(vector<int> &offers,vector<int> &mandatesOfCoalition) {
     return  offers.back();
 }
+
+JoinPolicy *LastOfferJoinPolicy::clone(){
+    return new LastOfferJoinPolicy; 
+}

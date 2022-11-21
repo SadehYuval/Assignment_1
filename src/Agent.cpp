@@ -3,7 +3,7 @@
 #include "Simulation.h"
 #include "SelectionPolicy.h"
 
-Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : mAgentId(agentId), mPartyId(partyId), mSelectionPolicy(selectionPolicy), coalition(0)
+Agent::Agent(int agentId, int partyId, SelectionPolicy *selectionPolicy) : mAgentId(agentId), mPartyId(partyId), mSelectionPolicy(selectionPolicy), coalition()
 {
     // You can change the implementation of the constructor, but not the signature!
 }
@@ -23,21 +23,23 @@ Agent::~Agent()
 Agent& Agent:: operator=(const Agent& other)
 {
     if(this != &other){
+        delete(this);
         this->mAgentId = other.mAgentId;
         this->mPartyId = other.mPartyId;
-        this->mSelectionPolicy = other.mSelectionPolicy;//TODO check if valid
+        this->mSelectionPolicy = other.mSelectionPolicy->clone();
         this->coalition = other.coalition;
     }
     return *this;
 }
 //copy constructor
 Agent::Agent(const Agent &other)
-    : mAgentId{other.mAgentId}, mPartyId{other.mPartyId}, mSelectionPolicy{other.mSelectionPolicy}, coalition{other.coalition} {}
+    : mAgentId{other.mAgentId}, mPartyId{other.mPartyId}, mSelectionPolicy{other.mSelectionPolicy->clone()}, coalition{other.coalition} {}
 
 //move assignment operator
 Agent& Agent:: operator=(Agent &&other) noexcept
 {
     if(this != &other){
+        delete(this);
         mAgentId = other.mAgentId;
         mPartyId = other.mPartyId;
         mSelectionPolicy = other.mSelectionPolicy;
@@ -48,7 +50,7 @@ Agent& Agent:: operator=(Agent &&other) noexcept
 }
 //move copy constructor
 Agent::Agent(Agent &&other)noexcept
-        : mAgentId{other.mAgentId}, mPartyId{other.mPartyId}, mSelectionPolicy{other.mSelectionPolicy}, coalition{other.coalition}
+        : mAgentId{other.mAgentId}, mPartyId{other.mPartyId}, mSelectionPolicy{other.mSelectionPolicy->clone()}, coalition{other.coalition}
 {
     other.mSelectionPolicy = nullptr;
     //need to check if we need to  other.offers = nullptr;
@@ -76,8 +78,11 @@ int Agent::getCoalition() const
 void Agent::step(Simulation &sim)
 {
     int selectedPartyId = mSelectionPolicy -> select(sim, *this);
-    Party &selectedParty = sim.getGraph().getParty(selectedPartyId);
-    selectedParty.addOffer(mAgentId);
+    if(selectedPartyId != -1){
+         Party &selectedParty = sim.getGraph().getParty(selectedPartyId);
+         selectedParty.addOffer(mAgentId);
+    }
+
     
 }
 

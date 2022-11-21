@@ -9,9 +9,11 @@ int EdgeWeightSelectionPolicy::select(Simulation &sim, Agent &selector) {
     getNeighborsId(sim,selector.getPartyId(),validNeighborsId);
     screenNeighborsId(validNeighborsId, selector.getCoalition(),sim);
     int maxWeight = 0;
+    int validNeighborsIdSize = validNeighborsId.size();
+    if(validNeighborsIdSize == 0) //no valid party to choose
+        return -1;
     int partyIdtoChoose = validNeighborsId[0];
     int tempWeight;
-    int validNeighborsIdSize = validNeighborsId.size();
     for(int i=0; i<validNeighborsIdSize; i++){
         tempWeight = sim.getGraph().getEdgeWeight(selector.getPartyId(), i);
         if(tempWeight > maxWeight){
@@ -21,3 +23,7 @@ int EdgeWeightSelectionPolicy::select(Simulation &sim, Agent &selector) {
     }
     return partyIdtoChoose;
 }
+
+ SelectionPolicy *EdgeWeightSelectionPolicy::clone(){
+    return new EdgeWeightSelectionPolicy;
+ }

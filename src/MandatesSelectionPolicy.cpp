@@ -9,9 +9,11 @@ int MandatesSelectionPolicy::select(Simulation &sim, Agent &selector) {
     getNeighborsId(sim,selector.getPartyId(),validNeighborsId);
     screenNeighborsId(validNeighborsId, selector.getCoalition(),sim);
     int mostMandates = 0;
+    int validNeighborsIdSize = validNeighborsId.size();
+    if(validNeighborsIdSize == 0) //no valid party to choose
+        return -1;
     int partyIdtoChoose = validNeighborsId[0];
     int tempMandates;
-    int validNeighborsIdSize = validNeighborsId.size();
     for(int i=0; i<validNeighborsIdSize; i++){
         Party &currentParty = sim.getGraph().getParty(validNeighborsId[i]);
         tempMandates = currentParty.getMandates();
@@ -22,3 +24,7 @@ int MandatesSelectionPolicy::select(Simulation &sim, Agent &selector) {
     }
     return partyIdtoChoose;
 }
+
+ SelectionPolicy *MandatesSelectionPolicy::clone(){
+    return new MandatesSelectionPolicy;
+ }

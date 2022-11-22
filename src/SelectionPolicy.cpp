@@ -26,14 +26,15 @@ void SelectionPolicy::screenNeighborsId(vector <int> &neighborsId, int coalition
     for(int i =0; i<neighborsSize; i++){
             Party &currentParty = sim.getGraph().getParty(neighborsId[i]);
             int offersSize = currentParty.getOffers().size();
-            for(int j= 0;j<offersSize && add; j++){
+            bool joined = (currentParty.getState() == Joined);
+            for(int j= 0;j<offersSize && add && !joined; j++){
                 int offeredAgentyId = currentParty.getOffers()[j];
                 if(sim.getAgent(offeredAgentyId).getCoalition() == coalition){//If there is an offer from the same coalition as our agent in the offers list of a neighbor
-                 add = false;
+                    add = false;
                 }
         
             }
-            if(add){
+            if(add && !joined){
                 validNeighborsId.push_back(currentParty.getId());
             }
             add = true;

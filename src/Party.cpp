@@ -107,9 +107,9 @@ void Party::step(Simulation &s)
                 setState(Joined);
             }
         }
-        if(timer == 0 && !offers.empty()){
+        /*if(timer == 0 && !offers.empty()){
             setState(CollectingOffers);
-        }
+        }*/
     }
 }
 
@@ -122,7 +122,7 @@ void  Party::chooseParty(Simulation &s)
 {
     int selectedAgentId =  mJoinPolicy->join(offers,s.getMandatesCoalition());
     int cloneAgentCoalition = s.getAgents()[selectedAgentId].getCoalition();
-    Agent cloneAgent = s.getAgents()[0];
+    Agent cloneAgent = s.getAgents()[selectedAgentId];
     //clone Agent + add to vector<Agent>
     cloneAgent.setPartyId(mId);
     cloneAgent.setId(s.getAgents().size());

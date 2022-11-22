@@ -22,6 +22,8 @@ int MandatesSelectionPolicy::select(Simulation &sim, Agent &selector) {
             partyIdtoChoose = currentParty.getId();
         }
     }
+    if(sim.getGraph().getParty(partyIdtoChoose).getState() == Waiting)
+        sim.getGraph().getParty(partyIdtoChoose).setState(CollectingOffers);
     return partyIdtoChoose;
 }
 

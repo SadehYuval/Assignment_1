@@ -2,8 +2,8 @@
 
 Simulation::Simulation(Graph graph, vector<Agent> agents) : mGraph(graph), mAgents(agents), allCoalition(), sizeOfCoalitions()
 {
+    int index = 0;
     for(Agent &agent:mAgents) {
-        int index = 0;
         allCoalition.push_back(std::vector<int>{agent.getPartyId()});
         sizeOfCoalitions.push_back(getParty(agent.getPartyId()).getMandates());
         agent.setCoalition(index);
@@ -25,7 +25,7 @@ void Simulation::step()
 bool Simulation::shouldTerminate() const
 {
     int mAgentsSize = mAgents.size();
-    bool ans = mAgentsSize == mGraph.getNumVertices();//all parties are joined
+    bool ans = (mAgentsSize == mGraph.getNumVertices());//all parties are joined
     if(!ans){
         int allCoalitionSize = allCoalition.size();
         for(int i = 0; i< allCoalitionSize && !ans; i++){

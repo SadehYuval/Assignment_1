@@ -47,7 +47,7 @@ Party& Party:: operator=(Party &&other) noexcept
         mId = other.mId;
         mName = other.mName;
         mMandates = other.mMandates;
-        mJoinPolicy = other.mJoinPolicy->clone();
+        mJoinPolicy = other.mJoinPolicy;
         mState = other.mState;
         timer = other.timer;
         offers = other.offers;
@@ -57,7 +57,7 @@ Party& Party:: operator=(Party &&other) noexcept
 }
 //move copy constructor
 Party::Party(Party &&other)noexcept
-    : mId{other.mId}, mName{other.mName}, mMandates{other.mMandates}, mJoinPolicy{other.mJoinPolicy->clone()}, mState{other.mState}
+    : mId{other.mId}, mName{other.mName}, mMandates{other.mMandates}, mJoinPolicy{other.mJoinPolicy}, mState{other.mState}
     ,timer{other.timer}, offers{other.offers}
 {
     other.mJoinPolicy = nullptr;

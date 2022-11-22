@@ -50,7 +50,7 @@ Agent& Agent:: operator=(Agent &&other) noexcept
 }
 //move copy constructor
 Agent::Agent(Agent &&other)noexcept
-        : mAgentId{other.mAgentId}, mPartyId{other.mPartyId}, mSelectionPolicy{other.mSelectionPolicy->clone()}, coalition{other.coalition}
+        : mAgentId{other.mAgentId}, mPartyId{other.mPartyId}, mSelectionPolicy{other.mSelectionPolicy}, coalition{other.coalition}
 {
     other.mSelectionPolicy = nullptr;
     //need to check if we need to  other.offers = nullptr;
